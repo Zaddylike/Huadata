@@ -1,9 +1,0 @@
-#virtual env
-venv
-
-#backup files
-*.pyc
-__pycache__
-
-#database
-db.sqlite3

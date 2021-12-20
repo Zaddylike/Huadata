@@ -1,0 +1,50 @@
+html,
+body {
+  margin: 0 auto;
+  height: 100%;
+}
+
+body {
+  display: flex;
+  /* align-items: center; */
+  font-family: monospace;
+  justify-content: center;
+  background-color: #1d212b;
+}
+
+.main {
+    font-family: Helvetica;
+    top: 166px;
+    left: 408px;
+    position: absolute;
+    width: 1000px;
+    height: 500px;
+    line-height: 1.5vw;
+    text-align: center;
+    color: #252B37;
+    background-color: #1d212b;
+    animation: textColor 10s ease infinite;
+}
+
+@keyframes animateGlow {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+@keyframes textColor {
+    0% {
+        color: #7e0fff;
+    }
+    50% {
+        color: #0fffc1;
+    }
+    100% {
+        color: #7e0fff;
+    }
+}

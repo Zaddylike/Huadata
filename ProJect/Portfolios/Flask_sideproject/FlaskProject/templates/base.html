@@ -1,0 +1,67 @@
+<html>
+    <head>
+    <!--base of css-->
+    <link rel='stylesheet' href="../static/css/menu.css">
+    <link rel='stylesheet' href="../static/css/mmenu.css">
+    {% block css %}{% endblock %}
+    <title>The Juicy</title>
+
+    </head>
+
+    <body>
+        <!--base of nav-->
+        <div class="page">
+            <div class="header">
+                <a href="#menu" data-icon="grid"></a>
+                <nav id="menu">
+                    <ul>
+                        <li>
+                            <a href="/"> Home</a>
+                        </li>
+                        
+                        <li>
+                            <a href="#"> User</a>
+                            <ul>
+                                <li>
+                                    <a href="/auth/login"> Login</a>
+                                </li>
+                                <li>
+                                    <a href="/auth/signup"> Signup</a>
+                                </li>
+                                <li>
+                                    <a href="#about/address"> Logout</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href='#'>Product</a>
+                            <ul>
+                                <li><a href="/buysome/shop"> 3C</a></li>
+                                <li><a href="/buysome/shopcart"> Shopping cart</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="/message/write">Contact us</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {% block main %}{% endblock %}
+        <!--base of javascrip-->
+        <script src="../static/mmenu-js-master/dist/mmenu.polyfills.js"></script>
+        <script src="../static/mmenu-js-master/dist/mmenu.js"></script>
+        <script>
+            new Mmenu(document.querySelector('#menu'));
+
+            document.addEventListener('click', function (evnt) {
+                var anchor = evnt.target.closest('a[href^="#/"]');
+                if (anchor) {
+                    alert("Thank you for clicking, but that's a demo link.");
+                    evnt.preventDefault();
+                }
+            });
+        </script>
+        {% block script %}{% endblock %}
+    </body>
+</html>

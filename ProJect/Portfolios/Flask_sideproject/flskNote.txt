@@ -1,0 +1,6 @@
+
+
+
+flask db init #just use first one 
+flask db migrate -m "complete word"
+flask db upgrade

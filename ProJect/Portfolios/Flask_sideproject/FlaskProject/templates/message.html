@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block css %}
+    <link rel='stylesheet' href='../static/css/message.css'>
+{% endblock %}
+{% block title %}test{% endblock %}
+{% block main %}
+    <div id='container'>
+        <form id='from-1' action='' method= 'post'>
+            <div class= 'main'>
+                <div class= 'msg'>
+                    <p>Question</p>
+                </div>
+                <div class= 'title'>
+                    <span class= 'word'>Subject</span>
+                    <div class= 'field-box'>
+                        <input class= 'field' type='text' name= 'title' required >
+                    </div>
+                </div>
+
+                <div class= 'title'>
+                    <span class= 'word'>User</span>
+                    <div class= 'field-box'>
+                        <input class= 'field' type='text' name= 'username' required >
+                    </div>
+                </div>
+
+                <div class= 'title'>
+                    <span class= 'word'>Email</span>
+                    <div class= 'field-box'>
+                        <input class= 'field' type='text' name= 'email' required >
+                    </div>
+                </div>
+
+                <div class= 'title'>
+                    <span class= 'word'>Contnets</span>
+                    <div class= 'field-box'>
+                        <textarea class= 'field' name='contents' rows= "10" required></textarea>
+                    </div>
+                </div>
+                <div class= 'send'>
+                    <input type= 'submit' onclick='return isSend()' value='submit'>
+                </div>
+            </div>
+        </div>
+{% endblock %}
+{% block script %}{% endblock %}
+

@@ -1,0 +1,11 @@
+.shopcar {
+    position:absolute;
+    top: 200px;
+    left: 300px;
+    width:600px;
+    height:150px;
+}
+.shopcar li{
+    color:white;
+    font-size: 16px;
+}

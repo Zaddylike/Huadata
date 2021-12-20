@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block css %}
+    <link rel= 'stylesheet' href= "../static/css/forshopcar.css">
+{% endblock %}
+{% block title %}test{% endblock %}
+{% block main %}
+    <div class='shopcar'>
+        <input type="submit" value='pay all' onclick="javascript:window.location.href='http://localhost:8080/payment/to_ecpay'">
+        {% for i in cartoutPut %}
+            <ul>
+                <li>Productname: {{ i.productname }}</li>
+                <li>Productprice: {{ i.productprice }}</li>
+                <li>amount: {{ i.productamount }}</li>
+                <input type='number' class='{{ i.pid }}_deNum' step="1" min='1' max={{ i.productamount }}>
+                <input type='submit' value="delete" onclick="deleteItem('{{ i.productname }}','{{ i.pid }}')">
+            </ul>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block script %}
+    <script>
+        function buyall(data){
+            console.log(data);
+        };
+        function deleteItem(pn,pid){
+            var num= document.getElementsByClassName(pid+"_deNum");
+            var obj= {
+                'pn':pn,
+                'pid':pid,
+                'num':num[0].value,
+            };
+            console.log(obj)
+            var myjson= JSON.stringify(obj);
+            fetch('http://localhost:8080/buysome/shopcart',{
+                method: "POST",
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:myjson,
+            }).then((response)=>{
+                location.reload();
+                return response.text();
+            })
+        };
+    </script>
+{% endblock %}

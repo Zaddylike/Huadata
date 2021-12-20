@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}test{% endblock %}
+{% block main %}
+    <div class="main">
+        <h1>Log in</h1>
+        <form class='login' method="post">
+            <div>
+                <span class= 'word'>Account</span>
+                <input type="text" name="user" placeholder="Username" required="required" />
+            </div>
+            <div>
+                <span class= 'word'>Password</span>
+                <input type="password" name="password" placeholder="Password" required="required" />
+            </div>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
+        </form>
+    </div>
+{% endblock %}
+{% block script %}{% endblock %}

@@ -1,0 +1,15 @@
+# requirements.txt
+# pip install -r requiremants.txt
+
+Flask==1.1.1
+Flask-RESTful==0.3.8
+Flask-SQLAlchemy==2.4.1
+Flask-migrate
+Flask-marshmallow
+Flask-pagination
+flask-jwt-extended
+
+marshmallow-sqlalchemy
+marshmallow
+Flask-session
+pymysql

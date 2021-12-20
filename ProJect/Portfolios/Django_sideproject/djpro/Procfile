@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath djpro djpro.wsgi

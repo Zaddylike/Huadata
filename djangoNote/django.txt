@@ -1,0 +1,22 @@
+django-admin startproject projname
+
+
+python manage.py startapp appname(
+    urls.py,
+    setting.py,
+
+    app(
+        admin,
+        models,
+    )
+
+)
+
+python manage.py makemigrations
+python manage.py migrate
+
+python manage.py shell
+
+
+show databases;
+create database (databasename);

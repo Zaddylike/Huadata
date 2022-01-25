@@ -1,5 +1,7 @@
-import requests, os, time, re, csv, pandas
+import requests, os, time, re, csv, pandas, json
 from functools import wraps
+
+from sqlalchemy import false
 from APIparams import modelname_forAPI
 
 def runtime(func):
@@ -18,77 +20,6 @@ def runtime(func):
     return inner
 #
 
-class APIto_NY:
-    def __init__(self,url,data,para):
-        self.url = url
-        self.params = para
-        self.data = data
-        self.header = {
-            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.93 Safari/537.36",
-        }
-
-    def ParamsCheck(self):
-        if self.data.endswith('.txt',-4):
-            self.param = {
-                'model':self.params
-            }
-            self.data = [
-                {
-                    "fid": "1",
-                    "data": open(self.data,'r').read()
-                    }
-                    ]
-        else:
-            self.param = {
-                'model':self.params
-            }
-            self.data = {
-                'data':open(self.data,'rb')
-            }
-
-    def GetDataRes(self):
-        res = requests.get(
-            self.url,
-            headers = self.header,
-            params = self.param,
-            json = self.data
-            )
-        return res
-
-    def PostDataRes(self):
-        res = requests.post(
-            self.u,
-            headers = self.header,
-            params = self.param,
-            json = self.data
-            )
-
-        return res
-
-    def ResStatus(self,res):
-        if res.status_code == 201:
-            print(f"Status Code:{res.status_code}")
-            return 201
-        else:
-            return 422
-
-    def PassorFail(self,res):
-        if res.status_code == 201:
-            return 'pass'
-        else:
-            return 'fail'
-
-    def ParserRes(self,res):
-        status = self.res_status(res)
-        passorfail = self.check_result(res)
-
-        res = res.json()
-        response = [self.url,self.params,status,res['txt'],passorfail]
-        with open('.\TPCR\AIKernel-Preprocessing_API_Log.csv','a',encoding='utf-8',newline="") as file:
-            writer = csv.writer(file)
-            writer.writerow(response)
-#
-
 def CheckLogExist():
     try:
         if os.path.exists(r'.\TPCR\AIKernel-Preprocessing_API_Log.csv'):
@@ -99,19 +30,49 @@ def CheckLogExist():
         with open('.\TPCR\AIKernel-Preprocessing_API_Log.csv','w',encoding='utf-8',newline="") as file:
             writer = csv.writer(file)
             writer.writerow(['API','Model Name','Response Code','Response Content','Response Time','Pass/Fail'])
+#
 
+class APIPattern:
+    def __init__(self,data):
+        self.url = data['request']["url"]
+        self.header = data['request']['headers']
+        self.method = data['request']['method']
+
+        self.params = data['request']['params']
+        self.data = data['request']['data']
+        self.file = data['request']['file']
+
+    def CheckMethod(self):
+        if self.method.upper() == "GET":
+            self.GetDataRes()
+        elif self.method.upper() == "POST":
+            self.PostFataRes()
+
+    def GetDataRes(self):
+        self.res=requests.get(
+            self.url, 
+            headers=self.header, 
+            params=self.params, 
+            )
+        return self.res
+
+    def PostDataRes(self):
+        self.res=requests.post(
+            self.url,
+            headers=self.header, 
+            params=self.params, 
+            data=self.data,
+            files=self.file
+            )
+        return self.res
+
+    def ParserRes(self):
+        print(self.res)
+        
 if __name__ == '__main__':
-    CheckLogExist()
-    time=0
-    while True:
-        for i in modelname_forAPI:
-            dicomfile = os.listdir(f'C:\\{i}')
-            #目標網址、夾帶檔案、參數
-            process =  APIto_NY('https://stag.ai.efai.tw/infer/b64/',f'.\\data\\{i}\\{dicomfile[0]}',i)
-            process.ParamsCheck()
-            res = process.PostDataRes()
-            process.ParserRes(res)
-        time+=1
-        print(time)
-        if int(time)==1000:
-            break
+
+    with open('./paramspost.json','r',encoding='utf-8') as file:
+        main = APIPattern(data=json.load(file))
+        main.GetDataRes()
+        res = main.PostDataRes()
+        print(res.text)

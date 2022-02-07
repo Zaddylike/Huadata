@@ -1,2 +1,0 @@
-SSH：54.250.155.149
-user name：ubuntu
